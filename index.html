@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<title>ROOSTER TEKSTİL </title>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+  body {
+  background-color:lightblue;
+  color:black;
+
+}
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+}
+
+.header {
+  background-color:cornflowerblue;
+  padding: 10px;
+  text-align: center;
+  color:black;
+
+}
+
+.topnav {
+  overflow: hidden;
+  background-color: gray;
+}
+
+.topnav a {
+  float: left;
+  display: block;
+  color: black;
+  text-align: center;
+  padding: 20px 20px;
+  text-decoration: none;
+}
+
+.topnav a:hover {
+  background-color: red;
+  color: black;
+}
+
+
+.column {
+  float: left;
+  padding: 10px;
+}
+
+
+.column.side {
+  width: 30%;
+  color:black;
+  }
+
+
+.column.middle {
+  width: 40%;
+  color:black;
+  }
+
+.row:after {
+  content: "";
+  display: table;
+  clear: both;
+}
+
+@media screen and (max-width: 600px) {
+  .column.side, .column.middle {
+    width: 100%;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .topnav a {
+    float: none;
+    width: 100%;
+  }
+}
+
+.footer {
+  background-color: gray;
+  padding: 10px;
+  text-align: center;
+}
+</style>
+</head>
+<body>
+  
+
+<div class="header">
+  <h1>ROOSTER TEKSTİL</h1>
+  <img src="img_rooster.png.png" alt="rooster logo" 
+
+  widght="150" height="150">
+</div>
+
+<div class="topnav">
+  <a href="index.html"><b>Anasayfa</b></a>
+  <a href="hizmetler.html">H<b>izmetlerimiz</b></a>
+  <a href="KURUMSAL.html"><b>Kurumsal</b></a>
+  <a href="kariyer.html"><b>Kariyer</b></a>
+  <a href="iletişim.html"><b>İletişim</b></a>
+</div>
+
+<div class="row">
+  <div class="column side">
+    <h2>Son Dakika</h2>
+    <h3>Web Sitesi Kuruldu</h3>
+    <p>Rooster company ilk internet sitesini kurdu.Artık bizim hakkımızda merak ettiğiniz her şeyi bu sitede bulabilirsiniz.Bize soru sormayı unutmayın.</p>
+    <h3>İş İlanı</h3>
+    <p>Denizli tekstil kültürüne hakim,telstik çalışma ortamını bilen,deneyimli çalışma arkadaşkarı arıyoruz.Çalışma ortamımızı kariyer bölümünden detaylı şekilde öğrenebilirsiniz.İletişim bilgilerini de iletişim bölümünden öğrenebilir ve bizimle iletişime geçebilirisiniz.</p>
+  </div>
+  
+  <div class="column middle">
+    <h2>HAKKIMIZDA</h2>
+      <img src="tekstil.jpg" alt="ROOSTER TEKSTİL" style="max-width:100%;height:auto;">
+      <p>Rooter Tekstil 1966 yılında Denizli'de mütevazi bir tekstil olarak kurulmuştur.Azimli çalışma ve çalışan ve iş veren arasındaki saygıdan dolayı kısa sürede büyük bir fabrikaya sahip olduk.Fabrikamız şehrin 10 km dışında olup,ürünlermizi Denizli halkıyla buluşturmak iççin merkezde bir adet mağazamız mevcuttur.</p>
+      <p>Alanında uzman çalışanlarımız ve iş verenlerimizle yurt dışına ihracat yaparak ülke ekonomisinekatkıda bulunmaktayız.Bugün pek çok avrupa ülkesinin havlu,kilim,pike takımı vb. tekstil ürünlerini şireketimiz tatrafından temin edilmektedir.Denizli iline özgüx yöresel tasarımmürünlerimizle birçok turisti her yıl fabrikamız ve mağazamızda misafir ederek Denizli ekonomisine katkı sağlıyorz.</p>
+  
+  </div>
+  
+  <div class="column side">
+    <h2>Video</h2>
+    <video width="320" height="240" controls>
+          <source src="video.mp4">
+          </video>
+            <P>Bir ürününün fabrikadan halka ulaşma serüveni yukardaki videoda bulabilirsiniz.Rooster tekstil olarak son teknoloji ürünleri kullanarak ürünlerimizi itina ile üretmekteyiz</P>
+           
+  </div>
+</div>
+
+<div class="footer">
+  <p>Copyright</p>
+  <a href="https://www.instagram.com/ibrahimmsipal"><img src="insta.jpg.jpg" alt="insta" style="width:42px;height:42px;"> </a>
+  <a href="https://www.facebook.com/ibrahim.sipal.503"><img src="face.jpg.png" alt="face" style="width:42px;height:42px;"> </a>
+</div>
+  
+</body>
+</html>
