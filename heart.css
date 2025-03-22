@@ -1,0 +1,141 @@
+.heart-container {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    margin: 100px auto;
+}
+
+.heart {
+    position: absolute;
+    bottom: 40vmin;
+    left: 50%;
+    transform: translateX(-50%) scale(0);
+    width: 10vmin;
+    height: 9vmin;
+    z-index: 200;
+    animation: heart-beat 4s 6s infinite backwards;
+}
+
+.heart__left,
+.heart__right {
+    position: absolute;
+    top: 0;
+    width: 5vmin;
+    height: 8vmin;
+    border-radius: 5vmin 5vmin 0 0;
+    background-color: #ff3e6f;
+}
+
+.heart__left {
+    left: 0;
+    transform: rotate(-45deg);
+    transform-origin: 100% 100%;
+}
+
+.heart__right {
+    right: 0;
+    transform: rotate(45deg);
+    transform-origin: 0% 100%;
+}
+
+@keyframes heart-beat {
+    0% {
+        transform: translateX(-50%) scale(0);
+        opacity: 0;
+    }
+    10% {
+        transform: translateX(-50%) scale(1);
+        opacity: 1;
+    }
+    20% {
+        transform: translateX(-50%) scale(0.8);
+    }
+    30% {
+        transform: translateX(-50%) scale(1.2);
+    }
+    40% {
+        transform: translateX(-50%) scale(1);
+    }
+    50% {
+        transform: translateX(-50%) scale(1.1);
+    }
+    60%, 100% {
+        transform: translateX(-50%) scale(1);
+    }
+}
+
+.heart::after {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: #ff3e6f;
+    filter: blur(2vmin);
+    opacity: 0;
+    z-index: -1;
+    animation: heart-glow 4s 6s infinite;
+}
+
+@keyframes heart-glow {
+    0%, 100% {
+        opacity: 0;
+        transform: scale(1);
+    }
+    30% {
+        opacity: 0.6;
+        transform: scale(1.5);
+    }
+    50% {
+        opacity: 0.3;
+        transform: scale(1.2);
+    }
+    70% {
+        opacity: 0.6;
+        transform: scale(1.5);
+    }
+}
+
+.heart-expanded {
+    width: 900px !important;
+    height: 900px !important;
+}
+
+.pulse-heart {
+    animation: pulse 1s ease-out;
+    z-index: 1;
+}
+
+.heart-shaped-image {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    clip-path: path('M23.6,0c-3.4,0-6.3,2.7-7.6,5.6C14.7,2.7,11.8,0,8.4,0C3.8,0,0,3.8,0,8.4c0,9.4,9.5,11.9,16,21.2c6.1-9.3,16-12.1,16-21.2C32,3.8,28.2,0,23.6,0z');
+}
+
+.final-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.heart-frame {
+    pointer-events: none;
+}
+
+@keyframes pulse {
+    0% {
+        transform: scale(0.8);
+        opacity: 0;
+    }
+    50% {
+        opacity: 0.8;
+    }
+    100% {
+        transform: scale(1);
+        opacity: 0;
+    }
+} 
