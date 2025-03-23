@@ -5,6 +5,13 @@
   Made with Pure CSS & ♥
 -->
 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>Blossoming Flowers</title>
+</head>
 <body class="not-loaded">
   <div class="night"></div>
   <div class="stars-container">
@@ -378,14 +385,19 @@
     -->
   </div>
 </body>
+</html>
 
 <script>
-onload = () => {
-  const c = setTimeout(() => {
+// Sayfa yüklenmeden önce body'ye preload sınıfı ekleyelim
+document.body.classList.add("preload");
+
+window.addEventListener("load", function() {
+  // Kısa bir gecikme ekleyerek animasyonların düzgün başlamasını sağlayalım
+  setTimeout(function() {
     document.body.classList.remove("not-loaded");
-    clearTimeout(c);
-  }, 1000);
-};
+    document.body.classList.remove("preload");
+  }, 300);
+});
 </script>
 
 <style>
@@ -1623,6 +1635,13 @@ body {
     transform: scale(0);
     opacity: 0;
   }
+  20% {
+    opacity: 0.5;
+  }
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
 }
 
 @keyframes light-ans {
@@ -1865,5 +1884,35 @@ body {
   left: 75%;
   animation-delay: 3.3s;
 }
+
+/* Preload durumu için stil */
+.preload * {
+  transition: none !important;
+  animation-play-state: paused !important;
+  animation-delay: 0s !important;
+}
+
+/* Mobil cihazlar için ek düzenlemeler */
+@media screen and (max-width: 768px) {
+  body {
+    overflow-x: hidden;
+    width: 100%;
+    position: fixed;
+    height: 100%;
+  }
+  
+  .flowers {
+    transform: scale(1); 
+  }
+  
+  .star {
+    width: 40px;
+    height: 40px;
+  }
+  
+  .star--special {
+    width: 60px;
+    height: 60px;
+  }
+}
 </style>
-</rewritten_file>
