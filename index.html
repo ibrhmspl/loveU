@@ -396,15 +396,33 @@
 // Sayfa yüklenmeden önce body'ye preload sınıfı ekleyelim
 document.body.classList.add("preload");
 
+// Mobil cihaz kontrolü
+const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
+
 window.addEventListener("load", function() {
   // Kısa bir gecikme ekleyerek animasyonların düzgün başlamasını sağlayalım
   setTimeout(function() {
     document.body.classList.remove("not-loaded");
     document.body.classList.remove("preload");
+    
+    // Mobil cihazlarda performans iyileştirmeleri
+    if (isMobile) {
+      // Gereksiz animasyonları devre dışı bırakalım
+      const lessImportantElements = document.querySelectorAll('.flower__light, .flower__grass__leaf');
+      lessImportantElements.forEach(el => {
+        el.style.animationPlayState = 'paused';
+      });
+      
+      // Yıldız sayısını sınırlayalım
+      const extraStars = document.querySelectorAll('.star:nth-child(n+9)');
+      extraStars.forEach(star => {
+        star.style.display = 'none';
+      });
+    }
   }, 300);
 });
 
-// Güzel sözleri göstermek için fonksiyon
+// Güzel sözleri göstermek için fonksiyon - optimize edilmiş
 function showQuote(quote) {
   const quoteContainer = document.getElementById('quote-container');
   const quoteText = document.getElementById('quote-text');
@@ -412,36 +430,33 @@ function showQuote(quote) {
   // Metni ayarla
   quoteText.textContent = quote;
   
-  // Görünür yap
+  // Görünür yap - animasyonları basitleştirelim
   quoteContainer.style.display = 'block';
-  quoteContainer.classList.remove('fade-out');
-  quoteContainer.classList.add('fade-in');
+  quoteContainer.style.opacity = '1';
   
   // 5 saniye sonra kapat
   setTimeout(function() {
-    quoteContainer.classList.remove('fade-in');
-    quoteContainer.classList.add('fade-out');
+    quoteContainer.style.opacity = '0';
     
     // Animasyon bittikten sonra gizle
     setTimeout(function() {
       quoteContainer.style.display = 'none';
-    }, 500);
+    }, 300);
   }, 5000);
 }
 
-// Herhangi bir yere tıklandığında açık olan alıntıyı kapat
+// Herhangi bir yere tıklandığında açık olan alıntıyı kapat - optimize edilmiş
 document.addEventListener('click', function(event) {
   const quoteContainer = document.getElementById('quote-container');
   const clickedElement = event.target;
   
   // Eğer tıklanan element bir yıldız değilse ve alıntı görünürse kapat
   if (!clickedElement.closest('.star') && quoteContainer.style.display === 'block') {
-    quoteContainer.classList.remove('fade-in');
-    quoteContainer.classList.add('fade-out');
+    quoteContainer.style.opacity = '0';
     
     setTimeout(function() {
       quoteContainer.style.display = 'none';
-    }, 500);
+    }, 300);
   }
 });
 </script>
@@ -592,17 +607,13 @@ body {
 }
 
 @keyframes twinkle {
-  0% {
-    opacity: 0;
-    transform: scale(0.8);
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.9);
   }
   50% {
     opacity: 0.7;
     transform: scale(1);
-  }
-  100% {
-    opacity: 0.9;
-    transform: scale(0.9);
   }
 }
 
@@ -1839,17 +1850,13 @@ body {
 
 /* Özel yıldız için animasyon */
 @keyframes specialTwinkle {
-  0% {
-    opacity: 0.2;
-    transform: scale(0.8) rotate(0deg);
+  0%, 100% {
+    opacity: 0.4;
+    transform: scale(0.9);
   }
   50% {
-    opacity: 1;
-    transform: scale(1.1) rotate(5deg);
-  }
-  100% {
-    opacity: 0.8;
-    transform: scale(0.9) rotate(-5deg);
+    opacity: 0.9;
+    transform: scale(1.05);
   }
 }
 
@@ -1955,12 +1962,33 @@ body {
   }
   
   .flowers {
-    transform: scale(1);
+    transform: scale(0.8); /* Çiçekleri biraz küçültelim */
     position: relative;
     bottom: 5vh;
+    /* Animasyonları basitleştirelim */
+    will-change: transform;
+  }
+  
+  /* Yıldız sayısını azaltalım */
+  .star--9, .star--10, .star--11, .star--12, .star--13, 
+  .star--14, .star--15, .star--16, .star--17, .star--18, 
+  .star--19, .star--20, .star--21, .star--22 {
+    display: none;
+  }
+  
+  /* Animasyonları basitleştirelim */
+  .flower, .flower__light, .flower__grass, .flower__g-long, 
+  .flower__g-right, .flower__g-front, .flower__g-fr, .long-g {
+    animation-duration: 6s; /* Animasyon süresini uzatalım */
+  }
+  
+  /* Blur efektlerini azaltalım */
+  .night {
+    filter: none;
   }
   
   .star {
+    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
     width: 40px;
     height: 40px;
   }
@@ -1968,6 +1996,13 @@ body {
   .star--special {
     width: 60px;
     height: 60px;
+    filter: drop-shadow(0 0 6px rgba(57, 198, 214, 0.7));
+  }
+  
+  /* Alıntı kutusu için daha hafif efektler */
+  .quote-container {
+    backdrop-filter: none;
+    background-color: rgba(0, 0, 0, 0.8);
   }
 }
 
