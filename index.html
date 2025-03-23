@@ -440,7 +440,10 @@ function showQuote(quote) {
   quoteContainer.classList.remove('fade-out');
   quoteContainer.classList.add('fade-in');
   
-  // 5 saniye sonra kapat
+  // Mobil cihazlarda daha uzun süre göster
+  const displayTime = isMobile ? 10000 : 5000; // Mobilde 10 saniye, masaüstünde 5 saniye
+  
+  // Belirtilen süre sonra kapat
   setTimeout(function() {
     quoteContainer.classList.remove('fade-in');
     quoteContainer.classList.add('fade-out');
@@ -449,7 +452,7 @@ function showQuote(quote) {
     setTimeout(function() {
       quoteContainer.style.display = 'none';
     }, 500);
-  }, 5000);
+  }, displayTime);
 }
 
 // Herhangi bir yere tıklandığında açık olan alıntıyı kapat
@@ -2160,6 +2163,37 @@ body {
   .flower__line, .flower__leaf, .flower__line__leaf, 
   .flower__leafs, .grow-ans, .growing-grass {
     animation-delay: calc(var(--d) * 0.5) !important; /* Gecikmeleri yarıya indirelim */
+  }
+  
+  /* Alıntı kutusu için mobil düzenlemeler */
+  .quote-container {
+    max-width: 90%;
+    padding: 20px;
+    background-color: rgba(0, 0, 0, 0.8); /* Daha koyu arka plan */
+  }
+  
+  .quote-text {
+    font-size: 18px; /* Daha küçük font */
+    line-height: 1.4;
+  }
+  
+  /* Animasyonları daha belirgin yapalım */
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translate(-50%, -60%); }
+    to { opacity: 1; transform: translate(-50%, -50%); }
+  }
+  
+  @keyframes fadeOut {
+    from { opacity: 1; transform: translate(-50%, -50%); }
+    to { opacity: 0; transform: translate(-50%, -60%); }
+  }
+  
+  .fade-in {
+    animation: fadeIn 0.7s forwards;
+  }
+  
+  .fade-out {
+    animation: fadeOut 0.7s forwards;
   }
 }
 </style>
