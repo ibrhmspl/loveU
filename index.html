@@ -15,70 +15,70 @@
 <body class="not-loaded">
   <div class="night"></div>
   <div class="stars-container">
-    <div class="star star--1">
+    <div class="star star--1" onclick="showQuote('Aşk, iki kalbin aynı ritimde atmasıdır.')">
       <img src="whatsapp1.jpeg" alt="WhatsApp 1">
     </div>
-    <div class="star star--2">
+    <div class="star star--2" onclick="showQuote('Seni sevmek, nefes almak kadar doğal.')">
       <img src="whatsapp2.jpeg" alt="WhatsApp 2">
     </div>
-    <div class="star star--3">
+    <div class="star star--3" onclick="showQuote('Gözlerine baktığımda, tüm dünyayı görüyorum.')">
       <img src="whatsapp3.jpeg" alt="WhatsApp 3">
     </div>
-    <div class="star star--4">
+    <div class="star star--4" onclick="showQuote('Aşk, iki ruhun birbirini tamamlamasıdır.')">
       <img src="whatsapp4.jpeg" alt="WhatsApp 4">
     </div>
-    <div class="star star--5">
+    <div class="star star--5" onclick="showQuote('Kalbim seninle doluyken, başka hiçbir şeye yer yok.')">
       <img src="whatsapp5.jpeg" alt="WhatsApp 5">
     </div>
-    <div class="star star--6">
+    <div class="star star--6" onclick="showQuote('Seninle geçen her an, hayatımın en değerli zamanı.')">
       <img src="whatsapp6.jpeg" alt="WhatsApp 6">
     </div>
-    <div class="star star--7">
+    <div class="star star--7" onclick="showQuote('Aşk, her şeyi güzelleştiren sihirdir.')">
       <img src="whatsapp7.jpeg" alt="WhatsApp 7">
     </div>
-    <div class="star star--8 star--special">
+    <div class="star star--8 star--special" onclick="showQuote('Seni seviyorum, dünyadaki tüm yıldızlar kadar çok.')">
       <img src="htcibo.jpg" alt="HTCibo">
     </div>
-    <div class="star star--9">
+    <div class="star star--9" onclick="showQuote('Aşk, iki kalp arasında kurulan köprüdür.')">
       <img src="whatsapp1.jpeg" alt="WhatsApp 1">
     </div>
-    <div class="star star--10">
+    <div class="star star--10" onclick="showQuote('Seninle her gün yeniden aşık oluyorum.')">
       <img src="whatsapp2.jpeg" alt="WhatsApp 2">
     </div>
-    <div class="star star--11">
+    <div class="star star--11" onclick="showQuote('Gülüşün, kalbimin ritmi.')">
       <img src="whatsapp3.jpeg" alt="WhatsApp 3">
     </div>
-    <div class="star star--12">
+    <div class="star star--12" onclick="showQuote('Aşk, hayatın en güzel armağanıdır.')">
       <img src="whatsapp4.jpeg" alt="WhatsApp 4">
     </div>
-    <div class="star star--13">
+    <div class="star star--13" onclick="showQuote('Senin yanında olmak, evimde olmak gibi.')">
       <img src="whatsapp5.jpeg" alt="WhatsApp 5">
     </div>
-    <div class="star star--14">
+    <div class="star star--14" onclick="showQuote('Aşk, iki ruhun dans etmesidir.')">
       <img src="whatsapp6.jpeg" alt="WhatsApp 6">
     </div>
-    <div class="star star--15">
+    <div class="star star--15" onclick="showQuote('Seni düşündüğümde, kalbim hızlanıyor.')">
       <img src="whatsapp7.jpeg" alt="WhatsApp 7">
     </div>
-    <div class="star star--16">
+    <div class="star star--16" onclick="showQuote('Aşk, hayatın anlamını bulduğun andır.')">
       <img src="whatsapp1.jpeg" alt="WhatsApp 1">
     </div>
-    <div class="star star--17">
+    <div class="star star--17" onclick="showQuote('Seninle geçen her an, bir hazine gibi.')">
       <img src="whatsapp2.jpeg" alt="WhatsApp 2">
     </div>
-    <div class="star star--18">
+    <div class="star star--18" onclick="showQuote('Aşk, iki kalbin tek bir ritimde atmasıdır.')">
       <img src="whatsapp3.jpeg" alt="WhatsApp 3">
     </div>
-    <div class="star star--19">
+    <div class="star star--19" onclick="showQuote('Gözlerinde kaybolmak, en sevdiğim şey.')">
       <img src="whatsapp4.jpeg" alt="WhatsApp 4">
     </div>
-    <div class="star star--20">
+    <div class="star star--20" onclick="showQuote('Aşk, hayatın en tatlı rüyasıdır.')">
       <img src="whatsapp5.jpeg" alt="WhatsApp 5">
     </div>
-    <div class="star star--21">
+    <div class="star star--21" onclick="showQuote('Seninle her şey daha güzel.')">
       <img src="whatsapp6.jpeg" alt="WhatsApp 6">
     </div>
-    <div class="star star--22">
+    <div class="star star--22" onclick="showQuote('Aşk, iki kalbin aynı dili konuşmasıdır.')">
       <img src="whatsapp7.jpeg" alt="WhatsApp 7">
     </div>
   </div>
@@ -384,6 +384,11 @@
     <img src="htcibo.jpg" alt="HTCibo">
     -->
   </div>
+
+  <!-- Güzel sözleri göstermek için bir div ekleyelim -->
+  <div id="quote-container" class="quote-container">
+    <div id="quote-text" class="quote-text"></div>
+  </div>
 </body>
 </html>
 
@@ -397,6 +402,47 @@ window.addEventListener("load", function() {
     document.body.classList.remove("not-loaded");
     document.body.classList.remove("preload");
   }, 300);
+});
+
+// Güzel sözleri göstermek için fonksiyon
+function showQuote(quote) {
+  const quoteContainer = document.getElementById('quote-container');
+  const quoteText = document.getElementById('quote-text');
+  
+  // Metni ayarla
+  quoteText.textContent = quote;
+  
+  // Görünür yap
+  quoteContainer.style.display = 'block';
+  quoteContainer.classList.remove('fade-out');
+  quoteContainer.classList.add('fade-in');
+  
+  // 5 saniye sonra kapat
+  setTimeout(function() {
+    quoteContainer.classList.remove('fade-in');
+    quoteContainer.classList.add('fade-out');
+    
+    // Animasyon bittikten sonra gizle
+    setTimeout(function() {
+      quoteContainer.style.display = 'none';
+    }, 500);
+  }, 5000);
+}
+
+// Herhangi bir yere tıklandığında açık olan alıntıyı kapat
+document.addEventListener('click', function(event) {
+  const quoteContainer = document.getElementById('quote-container');
+  const clickedElement = event.target;
+  
+  // Eğer tıklanan element bir yıldız değilse ve alıntı görünürse kapat
+  if (!clickedElement.closest('.star') && quoteContainer.style.display === 'block') {
+    quoteContainer.classList.remove('fade-in');
+    quoteContainer.classList.add('fade-out');
+    
+    setTimeout(function() {
+      quoteContainer.style.display = 'none';
+    }, 500);
+  }
 });
 </script>
 
@@ -486,6 +532,9 @@ body {
   opacity: 0;
   filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.8));
   animation: twinkle 4s infinite alternate;
+  cursor: pointer;
+  pointer-events: auto;
+  transition: transform 0.3s ease;
 }
 
 .star img {
@@ -555,6 +604,10 @@ body {
     opacity: 0.9;
     transform: scale(0.9);
   }
+}
+
+.star:hover {
+  transform: scale(1.2);
 }
 
 .flowers {
@@ -1902,7 +1955,9 @@ body {
   }
   
   .flowers {
-    transform: scale(1); 
+    transform: scale(1);
+    position: relative;
+    bottom: 5vh;
   }
   
   .star {
@@ -1914,5 +1969,58 @@ body {
     width: 60px;
     height: 60px;
   }
+}
+
+/* Güzel sözler için stil */
+.quote-container {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: rgba(0, 0, 0, 0.7);
+  border-radius: 15px;
+  padding: 25px;
+  max-width: 80%;
+  z-index: 1000;
+  display: none;
+  box-shadow: 0 0 25px rgba(255, 105, 180, 0.8); /* Pembe gölge */
+  backdrop-filter: blur(5px);
+  text-align: center;
+  border: 1px solid rgba(255, 105, 180, 0.3); /* İnce pembe kenarlık */
+}
+
+.quote-text {
+  color: white;
+  font-family: 'Arial', sans-serif;
+  font-size: 20px;
+  line-height: 1.6;
+  text-shadow: 0 0 8px rgba(255, 105, 180, 0.8); /* Pembe gölge */
+  font-style: italic;
+}
+
+.quote-text::before, .quote-text::after {
+  content: '"';
+  color: rgba(255, 105, 180, 0.8);
+  font-size: 24px;
+  font-weight: bold;
+}
+
+/* Animasyon ekleyelim */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translate(-50%, -60%); }
+  to { opacity: 1; transform: translate(-50%, -50%); }
+}
+
+@keyframes fadeOut {
+  from { opacity: 1; transform: translate(-50%, -50%); }
+  to { opacity: 0; transform: translate(-50%, -60%); }
+}
+
+.fade-in {
+  animation: fadeIn 0.5s forwards;
+}
+
+.fade-out {
+  animation: fadeOut 0.5s forwards;
 }
 </style>
