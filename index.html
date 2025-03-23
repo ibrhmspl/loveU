@@ -396,33 +396,38 @@
 // Sayfa yüklenmeden önce body'ye preload sınıfı ekleyelim
 document.body.classList.add("preload");
 
-// Mobil cihaz kontrolü
+// Mobil cihaz tespiti
 const isMobile = /Android|webOS|iPhone|iPad|iPod|BlackBerry|IEMobile|Opera Mini/i.test(navigator.userAgent);
 
 window.addEventListener("load", function() {
   // Kısa bir gecikme ekleyerek animasyonların düzgün başlamasını sağlayalım
   setTimeout(function() {
-    document.body.classList.remove("not-loaded");
-    document.body.classList.remove("preload");
-    
-    // Mobil cihazlarda performans iyileştirmeleri
+    // Mobil cihazlarda animasyonları kademeli olarak başlatalım
     if (isMobile) {
-      // Gereksiz animasyonları devre dışı bırakalım
-      const lessImportantElements = document.querySelectorAll('.flower__light, .flower__grass__leaf');
-      lessImportantElements.forEach(el => {
-        el.style.animationPlayState = 'paused';
-      });
+      // Önce body sınıfını kaldıralım
+      document.body.classList.remove("not-loaded");
       
-      // Yıldız sayısını sınırlayalım
-      const extraStars = document.querySelectorAll('.star:nth-child(n+9)');
-      extraStars.forEach(star => {
-        star.style.display = 'none';
+      // Sonra preload sınıfını kaldıralım - kademeli animasyon için
+      setTimeout(function() {
+        document.body.classList.remove("preload");
+      }, 500);
+      
+      // Animasyonları gruplar halinde başlatalım
+      const flowers = document.querySelectorAll('.flower');
+      flowers.forEach((flower, index) => {
+        setTimeout(() => {
+          flower.classList.add('animate');
+        }, index * 300);
       });
+    } else {
+      // Masaüstünde normal başlatalım
+      document.body.classList.remove("not-loaded");
+      document.body.classList.remove("preload");
     }
   }, 300);
 });
 
-// Güzel sözleri göstermek için fonksiyon - optimize edilmiş
+// Güzel sözleri göstermek için fonksiyon
 function showQuote(quote) {
   const quoteContainer = document.getElementById('quote-container');
   const quoteText = document.getElementById('quote-text');
@@ -430,33 +435,36 @@ function showQuote(quote) {
   // Metni ayarla
   quoteText.textContent = quote;
   
-  // Görünür yap - animasyonları basitleştirelim
+  // Görünür yap
   quoteContainer.style.display = 'block';
-  quoteContainer.style.opacity = '1';
+  quoteContainer.classList.remove('fade-out');
+  quoteContainer.classList.add('fade-in');
   
   // 5 saniye sonra kapat
   setTimeout(function() {
-    quoteContainer.style.opacity = '0';
+    quoteContainer.classList.remove('fade-in');
+    quoteContainer.classList.add('fade-out');
     
     // Animasyon bittikten sonra gizle
     setTimeout(function() {
       quoteContainer.style.display = 'none';
-    }, 300);
+    }, 500);
   }, 5000);
 }
 
-// Herhangi bir yere tıklandığında açık olan alıntıyı kapat - optimize edilmiş
+// Herhangi bir yere tıklandığında açık olan alıntıyı kapat
 document.addEventListener('click', function(event) {
   const quoteContainer = document.getElementById('quote-container');
   const clickedElement = event.target;
   
   // Eğer tıklanan element bir yıldız değilse ve alıntı görünürse kapat
   if (!clickedElement.closest('.star') && quoteContainer.style.display === 'block') {
-    quoteContainer.style.opacity = '0';
+    quoteContainer.classList.remove('fade-in');
+    quoteContainer.classList.add('fade-out');
     
     setTimeout(function() {
       quoteContainer.style.display = 'none';
-    }, 300);
+    }, 500);
   }
 });
 </script>
@@ -607,13 +615,17 @@ body {
 }
 
 @keyframes twinkle {
-  0%, 100% {
-    opacity: 0.2;
-    transform: scale(0.9);
+  0% {
+    opacity: 0;
+    transform: scale(0.8);
   }
   50% {
     opacity: 0.7;
     transform: scale(1);
+  }
+  100% {
+    opacity: 0.9;
+    transform: scale(0.9);
   }
 }
 
@@ -1850,13 +1862,17 @@ body {
 
 /* Özel yıldız için animasyon */
 @keyframes specialTwinkle {
-  0%, 100% {
-    opacity: 0.4;
-    transform: scale(0.9);
+  0% {
+    opacity: 0.2;
+    transform: scale(0.8) rotate(0deg);
   }
   50% {
-    opacity: 0.9;
-    transform: scale(1.05);
+    opacity: 1;
+    transform: scale(1.1) rotate(5deg);
+  }
+  100% {
+    opacity: 0.8;
+    transform: scale(0.9) rotate(-5deg);
   }
 }
 
@@ -1962,48 +1978,104 @@ body {
   }
   
   .flowers {
-    transform: scale(0.8); /* Çiçekleri biraz küçültelim */
+    transform: scale(1);
     position: relative;
     bottom: 5vh;
-    /* Animasyonları basitleştirelim */
+    /* Donanım hızlandırma ekleyelim */
     will-change: transform;
-  }
-  
-  /* Yıldız sayısını azaltalım */
-  .star--9, .star--10, .star--11, .star--12, .star--13, 
-  .star--14, .star--15, .star--16, .star--17, .star--18, 
-  .star--19, .star--20, .star--21, .star--22 {
-    display: none;
+    transform-style: flat;
   }
   
   /* Animasyonları basitleştirelim */
-  .flower, .flower__light, .flower__grass, .flower__g-long, 
-  .flower__g-right, .flower__g-front, .flower__g-fr, .long-g {
-    animation-duration: 6s; /* Animasyon süresini uzatalım */
+  .flower__line {
+    /* Daha basit gölge */
+    box-shadow: none;
   }
   
-  /* Blur efektlerini azaltalım */
-  .night {
-    filter: none;
+  .flower__leaf, .flower__line__leaf, .flower__grass__leaf {
+    /* Maskeleme işlemlerini kaldıralım - performans için */
+    -webkit-mask-image: none;
+    mask-image: none;
   }
   
+  /* Işık efektlerini azaltalım */
+  .flower__light {
+    display: none;
+  }
+  
+  /* Çim animasyonlarını basitleştirelim */
+  .flower__grass__overlay {
+    filter: blur(0.5vmin);
+  }
+  
+  /* Animasyon kare hızını düşürelim */
+  @keyframes moving-flower-1 {
+    0%, 100% {
+      transform: rotate(2deg);
+      animation-timing-function: ease-in-out;
+    }
+    50% {
+      transform: rotate(-2deg);
+      animation-timing-function: ease-in-out;
+    }
+  }
+  
+  @keyframes moving-flower-2 {
+    0%, 100% {
+      transform: rotate(18deg);
+      animation-timing-function: ease-in-out;
+    }
+    50% {
+      transform: rotate(14deg);
+      animation-timing-function: ease-in-out;
+    }
+  }
+  
+  @keyframes moving-flower-3 {
+    0%, 100% {
+      transform: rotate(-18deg);
+      animation-timing-function: ease-in-out;
+    }
+    50% {
+      transform: rotate(-20deg) rotateY(-10deg);
+      animation-timing-function: ease-in-out;
+    }
+  }
+  
+  /* Yıldızları optimize edelim */
   .star {
-    filter: drop-shadow(0 0 4px rgba(255, 255, 255, 0.6));
     width: 40px;
     height: 40px;
+    will-change: transform, opacity;
   }
   
   .star--special {
     width: 60px;
     height: 60px;
-    filter: drop-shadow(0 0 6px rgba(57, 198, 214, 0.7));
   }
   
-  /* Alıntı kutusu için daha hafif efektler */
-  .quote-container {
-    backdrop-filter: none;
-    background-color: rgba(0, 0, 0, 0.8);
-  }
+  /* Yıldız gizleme kodunu kaldırdık - tüm yıldızlar görünecek */
+}
+
+/* Genel performans iyileştirmeleri */
+.flower, .flower__leaf, .flower__line, .flower__grass {
+  /* Donanım hızlandırma */
+  will-change: transform;
+  /* Daha az bellek kullanımı için */
+  backface-visibility: hidden;
+}
+
+/* Animasyon yükleme stratejisini değiştirelim */
+.not-loaded .flower__line {
+  height: 0 !important;
+  transition: none !important;
+}
+
+.not-loaded .flower__leaf,
+.not-loaded .flower__line__leaf,
+.not-loaded .flower__grass__leaf {
+  opacity: 0 !important;
+  transition: none !important;
 }
 
 /* Güzel sözler için stil */
@@ -2057,5 +2129,37 @@ body {
 
 .fade-out {
   animation: fadeOut 0.5s forwards;
+}
+
+/* Mobil cihazlar için ek düzenlemeler */
+@media screen and (max-width: 768px) {
+  /* Mevcut mobil düzenlemeler korunacak */
+  
+  /* Çiçek oluşum animasyonlarının süresini kısaltalım */
+  .flower__line {
+    animation-duration: 2s !important; /* Normalde 4s */
+  }
+  
+  .flower__leaf, .flower__line__leaf {
+    animation-duration: 0.4s !important; /* Normalde 0.8s */
+  }
+  
+  .grow-ans {
+    animation-duration: 1s !important; /* Normalde 2s */
+  }
+  
+  .flower__leafs {
+    animation-duration: 1s !important; /* Normalde 2s */
+  }
+  
+  .growing-grass {
+    animation-duration: 0.5s !important; /* Normalde 1s */
+  }
+  
+  /* Animasyon gecikmelerini de kısaltalım */
+  .flower__line, .flower__leaf, .flower__line__leaf, 
+  .flower__leafs, .grow-ans, .growing-grass {
+    animation-delay: calc(var(--d) * 0.5) !important; /* Gecikmeleri yarıya indirelim */
+  }
 }
 </style>
